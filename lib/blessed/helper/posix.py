@@ -152,3 +152,37 @@ def kbhit(terminal, timeout=None, _intr_continue=True):
 
     return False if terminal.keyboard_fd is None else check_r == ready_r
 
+@contextlib.contextmanager
+def location(terminal, x=None, y=None):
+    """Return a context manager for temporarily moving the cursor.
+
+    Move the cursor to a certain position on entry, let you print stuff
+    there, then return the cursor to its original position::
+
+        term = Terminal()
+        with term.location(2, 5):
+            print 'Hello, world!'
+            for x in xrange(10):
+                print 'I can do it %i times!' % x
+
+    Specify ``x`` to move to a certain column, ``y`` to move to a certain
+    row, both, or neither. If you specify neither, only the saving and
+    restoration of cursor position will happen. This can be useful if you
+    simply want to restore your place after doing some manual cursor
+    movement.
+
+    """
+    # Save position and move to the requested column, row, or both:
+    terminal.stream.write(self.save)
+    if x is not None and y is not None:
+        terminal.stream.write(self.move(y, x))
+    elif x is not None:
+        terminal.stream.write(self.move_x(x))
+    elif y is not None:
+        terminal.stream.write(self.move_y(y))
+    try:
+        yield
+    finally:
+        # Restore original cursor position:
+        terminal.stream.write(self.restore)
+

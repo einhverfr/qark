@@ -275,7 +275,6 @@ class Terminal(object):
         """
         return vterm._height_and_width(self)
 
-    @contextlib.contextmanager
     def location(self, x=None, y=None):
         """Return a context manager for temporarily moving the cursor.
 
@@ -284,9 +283,9 @@ class Terminal(object):
 
             term = Terminal()
             with term.location(2, 5):
-                print 'Hello, world!'
+                term.printstr('Hello, world!')
                 for x in xrange(10):
-                    print 'I can do it %i times!' % x
+                    term.printstr('I can do it %i times!' % x)
 
         Specify ``x`` to move to a certain column, ``y`` to move to a certain
         row, both, or neither. If you specify neither, only the saving and
@@ -294,23 +293,14 @@ class Terminal(object):
         simply want to restore your place after doing some manual cursor
         movement.
 
+        Please note:  on Linux/POSIX, print works in this way because of how
+        terminals on these operating systems work.  However on Windows, printing
+        to standard output will still append to the bottom of the screen, so
+        term.printstr() must be called instead (which wraps the platform
+        differences.
+
         """
-        # Save position and move to the requested column, row, or both:
-        self.stream.write(self.save)
-        if x is not None and y is not None:
-            try:
-                self.stream.write(self.move(y, x))
-	    except TypeError:
-		self.move(y, x)
-        elif x is not None:
-            self.stream.write(self.move_x(x))
-        elif y is not None:
-            self.stream.write(self.move_y(y))
-        try:
-            yield
-        finally:
-            # Restore original cursor position:
-            self.stream.write(self.restore)
+        return vterm.location(self, x, y);
 
     @contextlib.contextmanager
     def fullscreen(self):

@@ -76,3 +76,24 @@ def _winsize(fd):
     return _height_and_width(None)
 def kbhit(terminal, timeout=None, _intr_continue=None):
     return msvcrt.kbhit()
+
+@contextlib.contextmanager
+def location(terminal, x=None, y=None)
+    """
+    Returns a context manager which temporarily sets the location for 
+    term.printstr() to a specific point.
+
+    Unlike with the posix terminals, Windows consoles do not print standard
+    output to the same location.  Therefore you must use terminal.printestr()
+    instead of print if you want this to work properly on Windows.
+    """
+    old_location = None;
+    try:
+        old_location = terminal._win32_location
+    finally:
+        pass
+    terminal._win32_location = (x, y)
+    try:
+        yield
+    finally:
+        terminal._win32_location = old_location;
