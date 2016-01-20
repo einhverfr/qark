@@ -858,14 +858,14 @@ def print_terminal(objectlist):
 									for j in i:
 										if firstelement:
 											with term.location(10,term.height):
-														print j
+														term.printstr(j)
 											firstelement = False
 										else:
 											with term.location(20,term.height):
-														print j
+														term.printstr(j)
 								else:
 									with term.location(10,term.height):
-										print i
+										term.printstr(i)
 				if isinstance(extra_item, list):
 					for i in extra_item:
 						firstelement = True
@@ -873,14 +873,14 @@ def print_terminal(objectlist):
 							for j in i:
 								if firstelement:
 									with term.location(10,term.height):
-												print j
+												term.printstr(j)
 									firstelement = False
 								else:
 									with term.location(20,term.height):
-												print j
+												term.printstr(j)
 						else:
 							with term.location(10,term.height):
-									print i
+									term.printstr(i)
 				if isinstance(extra_item, str):
 					with term.location(10,term.height):
 									print extra_item

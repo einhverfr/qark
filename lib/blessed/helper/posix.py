@@ -187,5 +187,5 @@ def location(terminal, x=None, y=None):
         terminal.stream.write(terminal.restore)
 
 def printstr(terminal, string):
-    """Prints the strng to standard output, followed by a newline."""
-    print string + "\n" 
+    """Prints the strng to standard output"""
+    print string 

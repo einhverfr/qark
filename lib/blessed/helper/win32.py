@@ -119,10 +119,8 @@ def printstr(terminal, string):
     finally:
         pass
     if y == None:
-        print string +"\n";
+        print string;
     try:
         terminal.addString(y, x, string)
-        y = y + 1
-        terminal._win32_location = (x, y)
     except:
-        print string +"\n";
+        print string ;
