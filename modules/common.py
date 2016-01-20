@@ -141,7 +141,7 @@ class Writer(object):
 
 	def write(self, string):
 		with term.location(*self.location):
-			print(string)
+			term.printstr(string)
 
 class ColorizingStreamHandler(logging.StreamHandler):
 	color_map = {

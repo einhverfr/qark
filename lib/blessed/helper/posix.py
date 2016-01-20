@@ -173,16 +173,19 @@ def location(terminal, x=None, y=None):
 
     """
     # Save position and move to the requested column, row, or both:
-    terminal.stream.write(self.save)
+    terminal.stream.write(terminal.save)
     if x is not None and y is not None:
-        terminal.stream.write(self.move(y, x))
+        terminal.stream.write(terminal.move(y, x))
     elif x is not None:
-        terminal.stream.write(self.move_x(x))
+        terminal.stream.write(terminal.move_x(x))
     elif y is not None:
-        terminal.stream.write(self.move_y(y))
+        terminal.stream.write(terminal.move_y(y))
     try:
         yield
     finally:
         # Restore original cursor position:
-        terminal.stream.write(self.restore)
+        terminal.stream.write(terminal.restore)
 
+def printstr(terminal, string):
+    """Prints the strng to standard output, followed by a newline."""
+    print string + "\n" 

@@ -1,3 +1,11 @@
+"""
+Windows consoles are almost, but not quite, entirely unlike POSIX terminals
+
+POSIX terminals are effectively pretend tty devices which operate through 
+control sequences and characters along a serial pseduo-file interface.
+
+Windows consoles are object oriented with no in-band signalling.
+"""
 import msvcrt
 import console
 import contextlib
@@ -97,3 +105,24 @@ def location(terminal, x=None, y=None)
         yield
     finally:
         terminal._win32_location = old_location;
+
+def printstr(terminal, string):
+    """
+    Tries to put the string at the current location via pdcurses.
+    If that succeeds, increments the y coords by one.
+    If fails, or if no coordinates, prints to standard output.
+    """
+    x = None
+    y = None
+    try:
+        x, y = terminal._win32_location
+    finally:
+        pass
+    if y == None:
+        print string +"\n";
+    try:
+        terminal.addString(y, x, string)
+        y = y + 1
+        terminal._win32_location = (x, y)
+    except:
+        print string +"\n";

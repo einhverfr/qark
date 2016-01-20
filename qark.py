@@ -75,12 +75,12 @@ def clear_lines(n):
 	thread0.start()
 	thread0.join()
 
-def clear(n):
+def clear(n): # should probably be moved to terminal class
 	"""
 	clears n lines on the terminal
 	"""
 	with common.term.location():
-		print("\n"*n)
+		term.printstr("\n"*n)
 
 def progress_bar_update(count1=None,count2=None,count3=None,count4=None,count5=None,count6=None):
 	lock.acquire()

@@ -348,6 +348,11 @@ class Terminal(object):
         return ParameterizingString(self._foreground_color,
                                     self.normal, 'color')
 
+    def printstr(self, string):
+        """Prints a string to the current cursor location of the terminal
+        followed by a newline, and a move one row down."""
+        return vterm.printstr(self, string)
+
     @property
     def on_color(self):
         "Returns capability that sets the background color."
