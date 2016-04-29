@@ -38,9 +38,9 @@ def get_android_sdk_manager():
     """
     print common.term.yellow + str(common.config.get('qarkhelper','ANDROID_SDK_INFO')).decode('string-escape').format(t=common.term)
     print common.term.cyan
-        if not common.interactive_mode:
-            print("We need to download an sdk but no --download-sdk and non-interactive mode")
-            exit(1)
+    if not common.interactive_mode:
+        print("We need to download an sdk but no --download-sdk and non-interactive mode")
+        exit(1)
     choice=raw_input(common.config.get('qarkhelper','GET_ANDROID_SDK_MANAGER_PROMPT'))
     if str(choice).lower()=='y':
         download_sdk()
